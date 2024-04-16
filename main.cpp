@@ -186,7 +186,15 @@ void inicializar_array(int tam)
 int main() {
 
     vector<int> experimentos = {1,2};
-    vector<int> tams = {16,128,1024,8192,65536,524288,4194304};
+
+    vector<int> tams = {16,32,64,128,
+                        256,512,1024,
+                        2048,4096,8192,
+                        16384,32768,65536,
+                        131072,262144,524288,
+                        1048576,2097152,
+                        4194304};
+
 
     int hebra = 0;
     int tam=0;
@@ -207,16 +215,6 @@ int main() {
             hebra=16;
             directorio="1";
 
-            //PROCESA SECUENCIAL
-            secuencialOutputFile.open("./csv/" + directorio + "/sum_secuencial.csv");
-            secuencialOutputFile << "n,tiempo[ns]" << endl;
-            for (const int tam : tams) {
-                //PROCESA SECUENCIAL
-                inicializar_array(tam);
-                procesaSecuencial(tam);
-            }
-            secuencialOutputFile.close();
-
             //PROCESA PARALELO1
             paralelo_1OutputFile.open("./csv/" + directorio + "/sum_paralela_1.csv");
             paralelo_1OutputFile << "n,tiempo[ns]" << endl;
@@ -226,6 +224,16 @@ int main() {
                 procesaParalelo_1(tam, hebra);
             }
             paralelo_1OutputFile.close();
+
+            //PROCESA SECUENCIAL
+            secuencialOutputFile.open("./csv/" + directorio + "/sum_secuencial.csv");
+            secuencialOutputFile << "n,tiempo[ns]" << endl;
+            for (const int tam : tams) {
+                //PROCESA SECUENCIAL
+                inicializar_array(tam);
+                procesaSecuencial(tam);
+            }
+            secuencialOutputFile.close();
 
             //PROCESA PARALELO2
             paralelo_2OutputFile.open("./csv/" + directorio + "/sum_paralela_2.csv");
@@ -275,4 +283,12 @@ int main() {
         cout << vect_original[i] << " ";
     }
     cout << endl;
+
+   vector<int> tams = {131072,262144,524288,
+                        1048576, 2097152,
+                        4194304, 8338608,
+                        16777216, 33554432,
+                        67108864};
+
+
 */
